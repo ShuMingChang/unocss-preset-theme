@@ -1,13 +1,13 @@
 {
   "name": "@minmin614/unocss-preset-theme",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "packageManager": "pnpm@8.6.6",
   "description": "dynamic theme",
   "author": "Dunqing <dengqing0821@gmail.com>",
   "contributors": [
     {
       "name": "Terry Chang",
-      "email" : "minmin614@gmail.com"
+      "email": "minmin614@gmail.com"
     }
   ],
   "license": "MIT",
