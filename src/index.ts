@@ -47,7 +47,8 @@ export function presetTheme<T extends Record<string, any>>(options: PresetThemeO
   const varsRE = new RegExp(`var\\((${prefix}[\\w-]*)\\)`)
   const themeValues = new Map<string, ThemeValue>()
   const usedTheme: Array<ThemeValue> = []
-
+  const bgUrlRE = /^url\(.+\)$/
+  const bgImageKeyList: Array<string> = []
   return {
     name: 'unocss-preset-theme',
     extendTheme(originalTheme) {
@@ -91,6 +92,11 @@ export function presetTheme<T extends Record<string, any>>(options: PresetThemeO
               if (cssColor) {
                 setThemeValue(name, 0, true)
                 curTheme[key] = wrapCSSFunction(cssColor.type, wrapVar(name), cssColor?.alpha)
+              }
+              else if (bgUrlRE.test(val)) {
+                setThemeValue(name, 0, false)
+                curTheme[key] = wrapVar(name)
+                bgImageKeyList.push(curTheme[key])
               }
             }
             else {
@@ -180,6 +186,8 @@ export function presetTheme<T extends Record<string, any>>(options: PresetThemeO
             if (values)
               usedTheme.push(values)
           }
+          if (bgImageKeyList.includes(val))
+            util.entries[0][0] = 'background-image'
         }
       })
     },

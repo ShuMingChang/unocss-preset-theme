@@ -20,7 +20,7 @@ const onCompact: any = () => {
       dark: theme.dark,
       compact: theme.compact,
     }"
-    class="font-sans w-screen h-screen bg-container flex flex-col items-center px-2 "
+    class="font-sans w-screen h-screen bg-container flex flex-col items-center px-2"
   >
     <div class="flex flex-col sm:w-md w-full mt-40 border-2 border-color-border rounded-md px-xl py-lg">
       <div class="flex gap-x-4 ">
@@ -51,6 +51,8 @@ const onCompact: any = () => {
       </div>
       <p>You can see all the css in <span class="font-bold">Devtools</span></p>
     </div>
+    <div class="w-[300px] h-[300px]  bg-contain bg-no-repeat bg-context-bg" />
+    <div class="w-[300px] h-[300px]  bg-contain bg-no-repeat bg-cat-bg" />
   </div>
 </template>
 

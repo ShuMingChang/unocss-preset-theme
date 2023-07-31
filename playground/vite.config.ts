@@ -15,6 +15,8 @@ export default defineConfig({
         'text': 'rgba(0, 0, 0, 0.88)',
         'container': '#ffffff',
         'border': '#d9d9d9',
+        'context-bg': 'url(https://octodex.github.com/images/heisencat.png)',
+        'cat-bg': 'url(https://octodex.github.com/images/spidertocat.png)',
       },
       spacing: {
         xss: '4px',
@@ -37,6 +39,8 @@ export default defineConfig({
               'border': '#424242',
               'container': '#141414',
               'text': 'rgba(255, 255, 255, 0.85)',
+              'context-bg': 'url(https://octodex.github.com/images/homercat.png)',
+              'cat-bg': 'url(https://octodex.github.com/images/minion.png)',
             },
           },
           compact: {
