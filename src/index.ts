@@ -1,6 +1,9 @@
+import path from 'node:path'
+import fs from 'node:fs'
 import type { Preset } from '@unocss/core'
 import { mergeDeep } from '@unocss/core'
 import { parseCssColor } from '@unocss/preset-mini/utils'
+import jsonfile from 'jsonfile'
 import { getThemeVal, wrapCSSFunction, wrapVar } from './helpers'
 
 const defaultThemeNames = ['dark', 'light']
@@ -25,6 +28,7 @@ export interface PresetThemeOptions<Theme extends Record<string, any>> {
    * @default { light: ':root', [themeName]: '.[themeName]' }
    */
   selectors?: Selectors
+  generateKey?: boolean
 }
 
 /**
@@ -39,7 +43,7 @@ interface ThemeValue {
 }
 
 export function presetTheme<T extends Record<string, any>>(options: PresetThemeOptions<T>): Preset<T> {
-  const { prefix = '--un-preset-theme', theme } = options
+  const { prefix = '--un-preset-theme', theme, generateKey = false } = options
   const selectors: Selectors = { light: ':root', ...options.selectors }
   if (!theme.light)
     theme.light = {} as T
@@ -162,6 +166,7 @@ export function presetTheme<T extends Record<string, any>>(options: PresetThemeO
             keys.map(key => `${defaultThemeNames.includes(key) ? `${key}:` : ''}${PRESET_THEME_RULE}:${key}:${Date.now()}`),
             { preflights: false },
           )
+          generateKey && generateKeyFile(usedTheme, prefix)
           return css.split('\n').slice(1).map((line, index, lines) => {
             const prevLine = index > 0 ? lines[index - 1] : ''
             if (prevLine.includes('@media')) {
@@ -192,6 +197,29 @@ export function presetTheme<T extends Record<string, any>>(options: PresetThemeO
       })
     },
   }
+}
+
+function generateKeyFile(usedTheme: Array<ThemeValue>, prefix: string) {
+  fs.mkdir(`${path.resolve('')}/src/unoTheme/`, { recursive: true }, (err) => {
+    if (err)
+      return console.error(err)
+    // console.log('Directory created successfully!')
+  })
+  const file = `${path.resolve('')}/src/unoTheme/default.json`
+  const obj = new Set(usedTheme.map((item) => {
+    const [themeType, ...themeName] = item.name.slice(prefix.length + 1).split('-')
+    return JSON.stringify({
+      themeType,
+      themeName: themeName.join('-'),
+      varKey: item.name,
+      defaultTheme: Object.values(item.theme.light || {})[0],
+    })
+  }))
+  jsonfile.writeFile(file, Array.from(obj).map(item => JSON.parse(item)))
+    .then(() => {
+      // console.log('Write complete')
+    })
+    .catch((error: any) => console.error(error))
 }
 
 export default presetTheme

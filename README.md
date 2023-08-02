@@ -7,7 +7,7 @@ This preset will help you easily make dynamic theme switching. Inspired by [here
 ## Installation
 
 ```bash
-npm i -D unocss-preset-theme
+npm i -D @minmin614/unocss-preset-theme
 ```
 
 
