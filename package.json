@@ -1,6 +1,6 @@
 {
   "name": "@minmin614/unocss-preset-theme",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "packageManager": "pnpm@8.6.6",
   "description": "dynamic theme",
   "author": "Dunqing <dengqing0821@gmail.com>",
@@ -54,7 +54,9 @@
   },
   "dependencies": {
     "@unocss/core": "^0.53.5",
-    "@unocss/preset-mini": "^0.53.5"
+    "@unocss/preset-mini": "^0.53.5",
+    "@types/jsonfile": "^6.1.1",
+    "jsonfile": "^6.1.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.7",
